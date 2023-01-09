@@ -25,7 +25,7 @@ def show_table(table):
 
 def change_caracter(caracter):
 
-    if caracter == 'X':
+    if caracter in 'XF':
 
         return '1'
 
@@ -124,49 +124,317 @@ def populate_bomb(table):
     return table
 
 
-def get_free_area(table, line_p, colunm_p):
+def get_free_area(table, index_free_area, len_before=None):
 
     size_table = len(table) - 1
 
-    table[line_p][colunm_p] = 'F'
+    size_index = len(index_free_area)
 
-    for count in range(len(table)):
+    if len_before:
 
-        if colunm_p == 0: 
+        new_positions = [*index_free_area[len_before:]]
 
-            for item in range(len(table[line_p])):
+    else:
 
-                if table[line_p][item] in 'XF':
+        new_positions = index_free_area[:]
 
-                  table[line_p][item] = 'F'
+    free_area = False
 
-                else:
+    for value in new_positions:
 
-                    break  
+        line = value[0]
+        colunm = value[1]
 
-        elif colunm_p == size_table:
-            
-            for item in range(len(table[line_p]), 0):
+        if line == 0 and colunm == 0:
 
-                if table[line_p][item] in 'XF':
+            if table[line + 1][colunm + 1] in 'XF' and (line + 1, colunm + 1) not in index_free_area:
 
-                  table[line_p][item] = 'F'
+                free_area = True
+                
+                index_free_area.append((line + 1, colunm + 1))
 
-                else:
+            if table[line][colunm + 1] in 'XF' and (line, colunm + 1) not in index_free_area:
 
-                    break 
-            
-        elif 0 < colunm_p < size_table:
+                free_area = True
 
-            ...
+                index_free_area.append((line, colunm + 1))
 
+            if table[line + 1][colunm] in 'XF' and (line + 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm))
         
+        elif line == size_table and colunm == 0:
+
+            if table[line - 1][colunm + 1] in 'XF' and (line - 1, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm + 1))
+
+            if table[line - 1][colunm] in 'XF' and (line - 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm))
+
+            if table[line][colunm + 1] in 'XF' and (line, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm + 1))
+
+        elif line == 0 and colunm == size_table:
+
+            if table[line + 1][colunm - 1] in 'XF' and (line + 1, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm - 1))
+
+            if table[line + 1][colunm] in 'XF' and (line + 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm))
+
+            if table[line][colunm - 1] in 'XF' and (line, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm - 1))
+
+        elif line == size_table and colunm == size_table:
+
+            if table[line - 1][colunm - 1] in 'XF' and (line - 1, colunm - 1) not in index_free_area:
+
+                free_area = True
+                
+                index_free_area.append((line - 1, colunm - 1))
+
+            if table[line][colunm - 1] in 'XF' and (line, colunm - 1) not in index_free_area:
+
+                free_area = True
+                
+                index_free_area.append((line, colunm - 1))
+
+            if table[line - 1][colunm] in 'XF' and (line - 1, colunm) not in index_free_area:
+
+                free_area = True
+                
+                index_free_area.append((line - 1, colunm))
+
+        elif 0 == colunm and 0 < line < size_table:
+
+            if table[line + 1][colunm + 1] in 'XF' and (line + 1, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm + 1))
 
 
-    
-    
-table = create_table(size=10, caracter='X')
+            if table[line - 1][colunm + 1] in 'XF' and (line - 1, colunm + 1) not in index_free_area:
 
-table = populate_bomb(table)
+                free_area = True
 
-get_free_area(table, 5, 5)
+                index_free_area.append((line - 1, colunm + 1))
+
+
+            if table[line][colunm + 1] in 'XF' and (line, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm + 1))
+
+
+            if table[line + 1][colunm] in 'XF' and (line + 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm))
+
+
+            if table[line - 1][colunm] in 'XF' and (line - 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm))
+
+
+        elif size_table == colunm and 0 < line < size_table:
+
+            if table[line - 1][colunm - 1] in 'XF' and (line - 1, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm - 1))
+
+
+            if table[line + 1][colunm - 1] in 'XF' and (line + 1, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm - 1))
+
+
+            if table[line][colunm - 1] in 'XF' and (line, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm - 1))
+
+
+            if table[line + 1][colunm] in 'XF' and (line + 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm))
+
+
+            if table[line - 1][colunm] in 'XF' and (line - 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm))
+
+
+        elif 0  == line and 0 < colunm < size_table:
+
+            if table[line + 1][colunm + 1] in 'XF' and (line + 1, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm + 1))
+
+
+            if table[line + 1][colunm - 1] in 'XF' and (line + 1, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm - 1))
+
+
+            if table[line][colunm + 1] in 'XF' and (line, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm + 1))
+
+
+            if table[line][colunm - 1] in 'XF' and (line, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm - 1))
+
+
+            if table[line + 1][colunm] in 'XF' and (line + 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm))
+
+
+        elif size_table == line and 0 < colunm < size_table:
+
+            if table[line - 1][colunm - 1] in 'XF' and (line - 1, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm - 1))
+
+
+            if table[line - 1][colunm + 1] in 'XF' and (line - 1, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm + 1))
+
+
+            if table[line][colunm + 1] in 'XF' and (line, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm + 1))
+
+
+            if table[line][colunm - 1] in 'XF' and (line, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm - 1))
+
+
+            if table[line - 1][colunm] in 'XF' and (line - 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm))
+
+        else:
+
+            if table[line + 1][colunm + 1] in 'XF' and (line + 1, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm + 1))
+
+
+            if table[line - 1][colunm - 1] in 'XF' and (line - 1, colunm - 1) not in index_free_area:
+            
+                free_area = True
+
+                index_free_area.append((line - 1, colunm - 1))
+
+
+            if table[line - 1][colunm + 1] in 'XF' and(line - 1, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm + 1))
+
+
+            if table[line + 1][colunm - 1] in 'XF' and (line + 1, colunm - 1) not in index_free_area:
+        
+                free_area = True
+
+                index_free_area.append((line + 1, colunm - 1))
+
+
+            if table[line][colunm + 1] in 'XF' and (line, colunm + 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm + 1))
+
+
+            if table[line][colunm - 1] in 'XF' and (line, colunm - 1) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line, colunm - 1))
+
+            
+            if table[line + 1][colunm] in 'XF' and (line + 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line + 1, colunm))
+
+            
+            if table[line - 1][colunm] in 'XF' and (line - 1, colunm) not in index_free_area:
+
+                free_area = True
+
+                index_free_area.append((line - 1, colunm))
+
+    if free_area:
+
+        return get_free_area(table, index_free_area, len_before=size_index)
+
+    else: 
+        
+        return index_free_area
+
+
