@@ -138,8 +138,6 @@ def get_free_area(table, index_free_area, len_before=None):
 
         new_positions = index_free_area[:]
 
-    
-
     for value in new_positions:
 
         line = value[0]
@@ -332,3 +330,212 @@ def get_free_area(table, index_free_area, len_before=None):
         return index_free_area
 
 
+def get_numbers_free(table, index):
+
+    print(index)
+
+    size_table = len(table) - 1
+
+    for value in index:
+
+        line = value[0]
+        colunm = value[1]
+
+        if line == 0 and colunm == 0: 
+
+            if table[line + 1][colunm + 1].isnumeric():
+
+                index.append((line + 1, colunm + 1))
+
+            if table[line][colunm + 1].isnumeric():
+
+                index.append((line, colunm + 1))
+
+            if table[line + 1][colunm].isnumeric():
+
+                index.append((line + 1, colunm))
+
+
+        elif line == size_table and colunm == 0:
+
+            if table[line - 1][colunm + 1].isnumeric():
+
+                index.append((line - 1, colunm + 1))
+
+            if table[line - 1][colunm].isnumeric():
+
+                index.append((line - 1, colunm))
+
+            if table[line][colunm + 1].isnumeric():
+
+                index.append((line, colunm + 1))
+
+
+        elif line == 0 and colunm == size_table:
+
+            if table[line + 1][colunm - 1].isnumeric():
+
+                index.append((line + 1, colunm - 1))
+
+            if table[line + 1][colunm].isnumeric():
+
+                index.append((line + 1, colunm))
+
+            if table[line][colunm - 1].isnumeric():
+
+                index.append((line, colunm - 1))
+
+
+        elif line == size_table and colunm == size_table:
+
+            if table[line - 1][colunm - 1].isnumeric():
+
+                index.append((line - 1, colunm - 1))
+
+            if table[line][colunm - 1].isnumeric():
+
+                index.append((line, colunm - 1))
+
+            if table[line - 1][colunm].isnumeric():
+
+                index.append((line - 1, colunm))
+
+
+        elif 0 == colunm and 0 < line < size_table:
+
+            if table[line + 1][colunm + 1].isnumeric():
+
+                index.append((line + 1, colunm + 1))
+
+            if table[line - 1][colunm + 1].isnumeric():
+
+                index.append((line - 1, colunm + 1))
+
+            if table[line][colunm + 1].isnumeric():
+
+                index.append((line, colunm + 1))
+
+            if table[line + 1][colunm].isnumeric():
+
+                index.append((line + 1, colunm))
+
+            if table[line - 1][colunm].isnumeric():
+
+                index.append((line - 1, colunm))
+
+
+        elif size_table == colunm and 0 < line < size_table:
+
+            if table[line - 1][colunm - 1].isnumeric():
+
+                index.append((line - 1, colunm - 1))
+
+            if table[line + 1][colunm - 1].isnumeric():
+
+                index.append((line + 1, colunm - 1))
+
+            if table[line][colunm - 1].isnumeric():
+
+                index.append((line, colunm - 1))
+
+            if table[line + 1][colunm].isnumeric():
+
+                index.append((line + 1, colunm))
+
+            if table[line - 1][colunm].isnumeric():
+
+                index.append((line - 1, colunm))
+
+
+        elif 0  == line and 0 < colunm < size_table:
+
+            if table[line + 1][colunm + 1].isnumeric():
+
+                index.append((line + 1, colunm + 1))
+
+            if table[line + 1][colunm - 1].isnumeric():
+
+                index.append((line + 1, colunm - 1))
+
+            if table[line][colunm + 1].isnumeric():
+
+                index.append((line, colunm + 1))
+
+            if table[line][colunm - 1].isnumeric():
+
+                index.append((line, colunm - 1))
+
+            if table[line + 1][colunm].isnumeric():
+
+                index.append((line + 1, colunm))
+
+
+        elif size_table == line and 0 < colunm < size_table:
+
+            if table[line - 1][colunm - 1].isnumeric():
+
+                index.append((line - 1, colunm - 1))
+
+            if table[line - 1][colunm + 1].isnumeric():
+
+                index.append((line - 1, colunm + 1))
+
+            if table[line][colunm + 1].isnumeric():
+
+                index.append((line, colunm + 1))
+
+            if table[line][colunm - 1].isnumeric():
+
+                index.append((line, colunm - 1))
+
+            if table[line - 1][colunm].isnumeric():
+
+                index.append((line - 1, colunm))
+
+
+        else:
+
+            if table[line + 1][colunm + 1].isnumeric():
+
+                index.append((line + 1, colunm + 1))
+
+            if table[line - 1][colunm - 1].isnumeric():
+
+                index.append((line - 1, colunm - 1))
+
+            if table[line - 1][colunm + 1].isnumeric():
+
+                index.append((line - 1, colunm + 1))
+
+            if table[line + 1][colunm - 1].isnumeric():
+
+                index.append((line + 1, colunm - 1))
+
+            if table[line][colunm + 1].isnumeric():
+
+                index.append((line, colunm + 1))
+
+            if table[line][colunm - 1].isnumeric():
+
+                index.append((line, colunm - 1))
+
+            if table[line + 1][colunm].isnumeric():
+
+                index.append((line + 1, colunm))
+
+            if table[line - 1][colunm].isnumeric():
+
+                index.append((line - 1, colunm))
+    
+    print(index)
+
+    return table
+
+table = create_table(5, 'X')
+table = populate_bomb(table)
+show_table(table)
+index = [(0,0)]
+index = get_free_area(table, index)
+index = get_numbers_free(table, index)
+
+show_table(table)
