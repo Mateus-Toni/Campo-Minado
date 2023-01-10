@@ -55,13 +55,15 @@ your attempt:
 
         index_free_area = utils.get_free_area(template, index_free_area)
 
+        index_free_area = utils.get_numbers_free(template, index_free_area)
+
         for value in index_free_area:
 
             line = value[0]
             colunm = value[1]
 
-            template[line][colunm] = 'F'
-            game[line][colunm] = 'F'
+            template[line][colunm] = 'F' if template[line][colunm] in 'X' else template[line][colunm]
+            game[line][colunm] = template[line][colunm]
 
     elif template[line][colunm].isnumeric():
 
@@ -70,6 +72,7 @@ your attempt:
     elif template[line][colunm] == 'B':
 
         print('lose')
+        break
 
     else:
 
